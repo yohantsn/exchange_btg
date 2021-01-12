@@ -17,15 +17,19 @@ class SelectCurrencyViewModel extends BaseViewModel{
 
   QuotesModel quotesModel;
   CurrenciesModel currenciesModel;
+  CurrencySelectedModel currencySelectedModel;
 
   bool isConnected = false;
   bool isLoading = false;
 
   SelectCurrencyViewModel(){
     this.isLoading = true;
-    getQuotesModel();
-    getCurrenciesModel();
-    this.isLoading = false;
+    internet.isConnected().then((value) {
+      this.isConnected = value;
+      getQuotesModel();
+      getCurrenciesModel();
+      this.isLoading = false;
+    });
   }
 
   Future<void> getQuotesModel() async {
@@ -47,7 +51,7 @@ class SelectCurrencyViewModel extends BaseViewModel{
   }
 
   void selectCurrency({String idCurrency}){
-    CurrencySelectedModel currencySelectedModel = CurrencySelectedModel(
+    this.currencySelectedModel = CurrencySelectedModel(
         idCurrency: idCurrency,
         nameCurrency: currenciesModel.currencies
             .firstWhere((element) => element.idCurrency == idCurrency)
@@ -56,6 +60,6 @@ class SelectCurrencyViewModel extends BaseViewModel{
             .firstWhere((element) => element.idQuote.substring(0,3) == idCurrency)
             .valueQuote
     );
-    Modular.to.pop(currencySelectedModel);
+    Modular.to.pop(this.currencySelectedModel);
   }
 }
