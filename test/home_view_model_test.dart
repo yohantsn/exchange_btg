@@ -14,15 +14,15 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_modular/flutter_modular_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
+import 'utils.dart';
+
 
 void main() async{
   TestWidgetsFlutterBinding.ensureInitialized();
-  File fileQuotes =  File("test/resources/quotes.json");
-  File fileCurrencies =  File("test/resources/currencies.json");
   Map<String, dynamic> _mapJson = <String,dynamic>{};
-  String jsonQuotes = await fileQuotes.readAsString();
+  String jsonQuotes =  fixture("quotes.json");
   _mapJson["quotes"] = jsonQuotes;
-  String jsonCurrencies = await fileCurrencies.readAsString();
+  String jsonCurrencies = fixture("currencies.json");
   _mapJson["currencies"] = jsonCurrencies;
   initModule(AppModule(),
       changeBinds: [

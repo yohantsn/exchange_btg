@@ -8,13 +8,12 @@ import 'package:flutter_modular/flutter_modular.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'resources/navigation_mock.dart';
+import 'utils.dart';
 
 void main() async {
   TestWidgetsFlutterBinding.ensureInitialized();
-  File fileQuotes = File("test/resources/quotes.json");
-  File fileCurrencies = File("test/resources/currencies.json");
-  String jsonQuotes = await fileQuotes.readAsString();
-  String jsonCurrencies = await fileCurrencies.readAsString();
+  String jsonQuotes =  fixture("quotes.json");
+  String jsonCurrencies = fixture("currencies.json");
   Modular.navigatorDelegate = MyNavigatorMock();
 
   SelectCurrencyViewModel selectCurrencyViewModel = SelectCurrencyViewModel(
@@ -23,8 +22,13 @@ void main() async {
       quotesModel: 
           QuotesModel.fromJson(jsonDecode(jsonQuotes)));
 
-  test("teste calculate", () {
+  test("test select the currency", () {
     selectCurrencyViewModel.selectCurrency(idCurrency: "MXN");
     expect(selectCurrencyViewModel.currencySelectedModel.quoteUSD, 20.22588);
+  });
+
+  test("test select the currency", () {
+    selectCurrencyViewModel.searchCurrency(value: "usd");
+    expect(selectCurrencyViewModel.currenciesModelOriginal.currencies.length, 1);
   });
 }
