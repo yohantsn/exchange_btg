@@ -1,53 +1,26 @@
-import 'dart:convert';
 
 import 'package:app_btg/app/core/models/currencies_model.dart';
 import 'package:app_btg/app/core/models/currency_selected_model.dart';
 import 'package:app_btg/app/core/models/quotes_model.dart';
-import 'package:app_btg/app/core/repositories/api/exchange_interface.dart';
-import 'package:app_btg/app/core/repositories/local/local_storage_interface.dart';
-import 'package:app_btg/app/core/tools/verify_internet_interface.dart';
 import 'package:flutter_modular/flutter_modular.dart';
 
 import '../base_view_model.dart';
 
 class SelectCurrencyViewModel extends BaseViewModel{
-  final ILocalStorage localStorage = Modular.get();
-  final IExchange exchange = Modular.get();
-  final IVerifyInternet internet = Modular.get();
 
   QuotesModel quotesModel;
   CurrenciesModel currenciesModel;
+  CurrenciesModel currenciesModelOriginal;
   CurrencySelectedModel currencySelectedModel;
 
-  bool isConnected = false;
-  bool isLoading = false;
+  bool _isConnected = false;
+  bool _isLoading = false;
 
-  SelectCurrencyViewModel(){
-    this.isLoading = true;
-    internet.isConnected().then((value) {
-      this.isConnected = value;
-      getQuotesModel();
-      getCurrenciesModel();
-      this.isLoading = false;
-    });
-  }
+  bool get isConnected => _isConnected;
+  bool get isLoading => _isLoading;
 
-  Future<void> getQuotesModel() async {
-    if (this.isConnected) {
-      this.quotesModel = await exchange.getQuotes();
-    } else {
-      String jsonLocal = await localStorage.get(key: "quotes");
-      this.quotesModel = QuotesModel.fromJson(jsonDecode(jsonLocal));
-    }
-  }
-
-  Future<void> getCurrenciesModel() async {
-    if (this.isConnected) {
-      this.currenciesModel = await exchange.getCurrencies();
-    } else {
-      String jsonLocal = await localStorage.get(key: "currencies");
-      this.currenciesModel = CurrenciesModel.fromJson(jsonDecode(jsonLocal));
-    }
+  SelectCurrencyViewModel({this.currenciesModel, this.quotesModel}){
+    this.currenciesModelOriginal = this.currenciesModel;
   }
 
   void selectCurrency({String idCurrency}){
@@ -57,9 +30,25 @@ class SelectCurrencyViewModel extends BaseViewModel{
             .firstWhere((element) => element.idCurrency == idCurrency)
             .nameCurrency,
         quoteUSD: quotesModel.quotes
-            .firstWhere((element) => element.idQuote.substring(0,3) == idCurrency)
+            .firstWhere((element) => element.idQuote.contains(idCurrency))
             .valueQuote
     );
     Modular.to.pop(this.currencySelectedModel);
+  }
+
+  void searchCurrency({String value}){
+    CurrenciesModel _currenciesModel = CurrenciesModel(currencies: <Currency>[]);
+    this.currenciesModelOriginal = this.currenciesModel;
+    if(value.isNotEmpty){
+      for(Currency item in this.currenciesModel.currencies){
+        final id = item.idCurrency.toUpperCase();
+        final name = item.nameCurrency.toUpperCase();
+        if(id.contains(value.toUpperCase()) || name.contains(value.toUpperCase())){
+          _currenciesModel.currencies.add(item);
+        }
+      }
+        this.currenciesModelOriginal = _currenciesModel;
+    }
+    notifyListeners();
   }
 }

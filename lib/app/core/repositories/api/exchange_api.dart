@@ -21,12 +21,14 @@ class ExchangeApi implements IExchange{
     try {
       Response response = await dio.get(urlCurrencies);
       if(response.data != null && response.data.toString().isNotEmpty){
-        localStorage.put(key: "currencies", value: response.data);
-        currenciesModel = CurrenciesModel.fromJson(jsonDecode(response.data));
+        if(response.data["success"]) {
+          localStorage.put(key: "currencies", value: jsonEncode(response.data));
+        }
+        currenciesModel = CurrenciesModel.fromJson(response.data);
       }
       print(response);
     } catch (e) {
-      throw(e);
+
     }
     return currenciesModel;
   }
@@ -38,12 +40,14 @@ class ExchangeApi implements IExchange{
     try {
       Response response = await dio.get(urlQuotes);
       if(response.data != null && response.data.toString().isNotEmpty){
-        localStorage.put(key: "quotes", value: response.data);
-        quotesModel = QuotesModel.fromJson(jsonDecode(response.data));
+        if(response.data["success"]) {
+          localStorage.put(key: "quotes", value: jsonEncode(response.data));
+        }
+        quotesModel = QuotesModel.fromJson(response.data);
       }
       print(response);
     } catch (e) {
-      throw(e);
+
     }
     return quotesModel;
   }

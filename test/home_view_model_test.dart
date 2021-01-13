@@ -38,7 +38,7 @@ void main() async{
     homeViewModel.fromCurrencySelectedModel
     = CurrencySelectedModel(quoteUSD: 20.22, idCurrency: "MXN", nameCurrency: "Peso");
     
-    homeViewModel.calculate(value: 500);
+    homeViewModel.calculate(value: "500");
     expect(homeViewModel.resultCurrency.toStringAsFixed(2), "135.76");
   });
 }
