@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:app_btg/app/core/models/currencies_model.dart';
 import 'package:app_btg/app/core/models/quotes_model.dart';
 import 'package:app_btg/app/core/viewmodels/views/select_currency_view_model.dart';

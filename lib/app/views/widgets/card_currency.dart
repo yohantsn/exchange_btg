@@ -8,7 +8,7 @@ Widget cardCurrency({String textId, String textName, BuildContext context, Funct
   return GestureDetector(
     child: Container(
       alignment: Alignment.center,
-      height:  90,
+      height:  100,
       margin: EdgeInsets.all(5),
       padding: EdgeInsets.all(5),
       child: Column(

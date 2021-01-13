@@ -28,7 +28,7 @@ class ExchangeApi implements IExchange{
       }
       print(response);
     } catch (e) {
-
+      throw(e);
     }
     return currenciesModel;
   }
@@ -47,7 +47,7 @@ class ExchangeApi implements IExchange{
       }
       print(response);
     } catch (e) {
-
+      throw(e);
     }
     return quotesModel;
   }

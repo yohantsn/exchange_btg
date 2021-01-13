@@ -113,7 +113,7 @@ class HomeViewModel extends BaseViewModel {
       }
       _valueToExchange = _value;
     } catch (e) {
-
+      this._resultCurrency = 0;
     }
     notifyListeners();
   }

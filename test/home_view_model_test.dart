@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-
 import 'package:app_btg/app/app_module.dart';
 import 'package:app_btg/app/core/models/currency_selected_model.dart';
 import 'package:app_btg/app/core/repositories/api/exchange_interface.dart';
