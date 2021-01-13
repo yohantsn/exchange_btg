@@ -1,5 +1,4 @@
 import 'package:app_btg/app/app_module.dart';
-import 'package:app_btg/app/core/viewmodels/views/home_view_model.dart';
 import 'package:app_btg/app/views/widgets/color_theme.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -16,5 +15,5 @@ void main() {
         child: ModularApp(
           module: AppModule(),
         ),
-        create: (_)=> HomeViewModel()),);
+        create: (_)=> null),);
 }
