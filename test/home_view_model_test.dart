@@ -32,7 +32,7 @@ void main() async{
       ]);
   
   HomeViewModel homeViewModel = HomeViewModel();
-  test("teste calculate", (){
+  test("test calculate", (){
     homeViewModel.toCurrencySelectedModel 
     = CurrencySelectedModel(quoteUSD: 5.49, idCurrency: "BRL", nameCurrency: "Real");
     homeViewModel.fromCurrencySelectedModel

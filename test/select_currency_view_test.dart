@@ -27,7 +27,7 @@ void main() async {
     expect(selectCurrencyViewModel.currencySelectedModel.quoteUSD, 20.22588);
   });
 
-  test("test select the currency", () {
+  test("test search the currency", () {
     selectCurrencyViewModel.searchCurrency(value: "usd");
     expect(selectCurrencyViewModel.currenciesModelOriginal.currencies.length, 1);
   });

@@ -34,7 +34,7 @@ class SelectCurrencyView extends StatelessWidget {
                     SizedBox(width: MediaQuery.of(context).size.width,),
                     Padding(
                       padding: EdgeInsets.fromLTRB(20, 20, 10, 5),
-                      child: textPrincipal(text: "Seleciona e moeda:"),
+                      child: textPrincipal(text: "Selecione a moeda:"),
                     ),
                     Padding(
                       padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
